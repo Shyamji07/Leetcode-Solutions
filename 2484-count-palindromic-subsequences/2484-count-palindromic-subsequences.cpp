@@ -8,27 +8,35 @@ public:
         if(ind == s.length()) return 0; // traversed full string
         if(dp[ind][first][second][i] != -1) return dp[ind][first][second][i]; //already traversed
         
-        //option of not choosing current digit
+        //Not choosing current digit
         ll res = dfs(ind + 1, first, second, i, s);
-
+        
+      //Choosing the first digit of the subsequence
         if(i == 0) {
-            //option of choosing the first digit of the subsequence
             res += dfs(ind + 1, s[ind] - '0', second, i + 1, s);
             res %= mod;
-        } else if(i == 1) {
-            //option of choosing the second digit of the subsequence
+        } 
+        
+      //option of choosing the second digit of the subsequence
+        else if(i == 1) {
             res += dfs(ind + 1, first, s[ind] - '0', i + 1, s);
             res %= mod;
-        } else if(i == 2) {
-            //option of choosing the third digit of the subsequence
+        } 
+        
+      //Choosing the third digit of the subsequence
+        else if(i == 2) {
             res += dfs(ind + 1, first, second, i + 1, s);
             res %= mod;
-        } else if(i == 3 and s[ind] - '0' == second) {
-            //option of choosing the fourth digit of the subsequence if it matches with the second digit
+        } 
+        
+      //Choosing the fourth digit of the subsequence if it matches with the second digit
+        else if(i == 3 and s[ind] - '0' == second) {
                 res += dfs(ind + 1, first, second, i + 1, s);
                 res %= mod;
-        } else if(i == 4 and s[ind] - '0' == first) {
-            //option of choosing the fifth digit of the subsequence if it matches with the first digit
+        } 
+        
+      //Choosing the fifth digit of the subsequence if it matches with the first digit
+        else if(i == 4 and s[ind] - '0' == first) {
                 res += dfs(ind + 1, first, second, i + 1, s);
                 res %= mod;
         }
