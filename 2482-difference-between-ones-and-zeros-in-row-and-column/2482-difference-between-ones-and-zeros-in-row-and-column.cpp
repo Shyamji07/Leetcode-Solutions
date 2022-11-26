@@ -1,4 +1,3 @@
-const int mod=1e9+7;
 class Solution {
 public:
     vector<vector<int>> onesMinusZeros(vector<vector<int>>& arr) {
