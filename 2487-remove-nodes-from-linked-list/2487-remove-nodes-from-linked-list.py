@@ -1,7 +1,10 @@
-var removeNodes = function(head) {
-     if(head == null || head.next == null)return head;
-        var nextNode = removeNodes(head.next);
-        if(nextNode.val > head.val) return nextNode;
-        head.next = nextNode;
-        return head;
-};
+class Solution:
+    def removeNodes(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head.next:
+            return head
+        nextNode = self.removeNodes(head.next)
+        if head.val < nextNode.val:
+            return nextNode
+        else:
+            head.next = nextNode 
+            return head
