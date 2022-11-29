@@ -1,28 +1,55 @@
-class RandomizedSet:
+var RandomizedSet = function() {
+    this.arr = [];
+    this.mapp = {};
+};
 
-    def __init__(self):
-        self.mapp = {}
-        self.count = 0
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+RandomizedSet.prototype.insert = function(val) {
+    if (val in this.mapp){
+        return false;
+    }
 
-    def insert(self, val: int) -> bool:
-        if self.mapp.get(val) is None:
-            self.mapp[val] = 1
-            return True
-        return False 
+    this.arr.push(val);
+    this.mapp[val] = this.arr.length - 1;
+    return true;
+};
 
-    def remove(self, val: int) -> bool:
-        if self.mapp.get(val) is not None:
-            self.mapp.pop(val)
-            return True
-        return False
+/**
+ * @param {number} val
+ * @return {boolean}
+ */
+RandomizedSet.prototype.remove = function(val) {
+    if (!(val in this.mapp)){
+        return false;
+    }
 
-    def getRandom(self) -> int:
-        ran = [i for i in self.mapp.keys()]
-        return random.choice(ran)
+    const i = this.mapp[val];
+    delete this.mapp[val];
+
+    if (i < this.arr.length - 1) {
+        this.arr[i] = this.arr.slice(-1)[0];
+        this.mapp[this.arr[i]] = i;
+    }
+
+    this.arr.pop();
+    return true;
+};
+
+/**
+ * @return {number}
+ */
+RandomizedSet.prototype.getRandom = function() {
+    return this.arr[Math.floor(Math.random() * this.arr.length)]
+};
 
 
-# Your RandomizedSet object will be instantiated and called as such:
-# obj = RandomizedSet()
-# param_1 = obj.insert(val)
-# param_2 = obj.remove(val)
-# param_3 = obj.getRandom()
+/** 
+ * Your RandomizedSet object will be instantiated and called as such:
+ * var obj = new RandomizedSet()
+ * var param_1 = obj.insert(val)
+ * var param_2 = obj.remove(val)
+ * var param_3 = obj.getRandom()
+ */
