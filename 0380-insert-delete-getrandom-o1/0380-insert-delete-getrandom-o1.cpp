@@ -1,6 +1,6 @@
 class RandomizedSet {
 public:
-    vector<int>a;
+    vector<int>arr;
     unordered_map<int, int> mp;
     
     /** Initialize your data structure here. */
@@ -11,8 +11,8 @@ public:
         auto it=mp.find(val);
         if(it == mp.end())
         {
-            a.push_back(val);
-            mp[val]=a.size()-1;
+            arr.push_back(val);
+            mp[val]=arr.size()-1;
             return true;
         }
         return false;
@@ -23,9 +23,9 @@ public:
         auto it=mp.find(val);
         if(it != mp.end())
         {
-            a[it->second]=a.back();
-            a.pop_back();
-            mp[a[it->second]]=it->second;
+            arr[it->second]=arr.back();
+            arr.pop_back();
+            mp[arr[it->second]]=it->second;
             mp.erase(val);
             return true;
         }
@@ -34,7 +34,7 @@ public:
     
     /** Get a random element from the set. */
     int getRandom() {
-        return a[rand()%a.size()];
+        return arr[rand()%arr.size()];
     }
 };
 /**
