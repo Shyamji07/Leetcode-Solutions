@@ -1,10 +1,6 @@
-/**
- * @param {string} sentence
- * @return {boolean}
- */
-var isCircularSentence = function(s) {
-    for (let i = 0; i < s.length; ++i)
-            if (s[i] == ' ' && s[i-1] != s[i+1])
-                return false;
-        return s[0] == s[s.length-1];
-};
+class Solution:
+    def isCircularSentence(self, s: str) -> bool:
+        for i in range(len(s)):
+            if s[i] == " " and s[i-1] != s[i+1]:
+                return False
+        return s[0] == s[-1]
