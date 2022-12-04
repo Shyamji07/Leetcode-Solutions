@@ -13,7 +13,7 @@ var minimumAverageDifference = function(nums) {
             if(temp<mini)mini=temp,ans=i;
             curr+=nums[i];
         }
-        let temp=Math.floor(sum/n);
+        let temp=(parseInt)(sum/n);
         if(temp<mini)mini=temp,ans=n-1;
         return ans;
 };
