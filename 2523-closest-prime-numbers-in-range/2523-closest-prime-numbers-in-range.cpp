@@ -1,19 +1,23 @@
-bool np[1333333];
+vector<int> p;
+bool sieve[1000001] = {};
 class Solution {
 public:
-    vector<int> closestPrimes(int left, int right) {
-        memset(np,0,sizeof np);
-        int gap=1e9,ls=-1,I,J;
-        for(int i=2;i<=right;++i) if(!np[i]) {
-            if(i>=left) {
-            if(ls!=-1) {
-                if(i-ls<gap) gap=i-ls,I=i,J=ls;
+vector<int> closestPrimes(int left, int right) {
+    if (p.empty())
+        for (long long i = 2; i < 1000001; ++i)
+            if (!sieve[i]) {
+                p.push_back(i);
+                for (long long d = i * i; d < 1000001; d += i)
+                    sieve[d] = true;
             }
-            ls=i;
-            }
-            for(int j=i;j<=right;j+=i) np[j]=1;
+    int n1 = -1, n2 = -1, i = lower_bound(begin(p), end(p), left) - begin(p);
+    for (; i + 1 < p.size() && p[i + 1] <= right; ++i)
+        if (n1 == -1 || p[i + 1] - p[i] < n2 - n1) {
+            n1 = p[i];
+            n2 = p[i + 1];
+            if (n2 - n1 < 3)
+                break;			
         }
-        if(gap>1e8) return {-1,-1};
-        return {J,I};
-    }
+    return {n1, n2};
+}
 };
