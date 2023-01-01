@@ -1,6 +1,6 @@
+int ps[11] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31};
 class Solution {
 public:
-int ps[11] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31};
 int distinctPrimeFactors(vector<int>& nums) {
     unordered_set<int> primes;
     for (int n : nums) {
