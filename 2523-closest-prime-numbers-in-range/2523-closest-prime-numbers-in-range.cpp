@@ -1,48 +1,23 @@
+vector<int> p;
+bool sieve[1000001] = {};
 class Solution {
 public:
-    vector<int>v;
-    void findPrimes(int a, int b){
-        if (a <= 2) {
-        a = 2;
-        if (b >= 2) {
-            v.push_back(a);
-            a++;
-        }
-    }
-
-    if (a % 2 == 0)
-        a++;
-    for (int i = a; i <= b; i = i + 2) {
-        bool flag = 1;
-        for (int j = 2; j * j <= i; ++j) {
-            if (i % j == 0) {
-                flag = 0;
-                break;
+vector<int> closestPrimes(int left, int right) {
+    if (p.empty())
+        for (long long i = 2; i < 1000001; ++i)
+            if (!sieve[i]) {
+                p.push_back(i);
+                for (long long d = i * i; d < 1000001; d += i)
+                    sieve[d] = true;
             }
+    int n1 = -1, n2 = -1, i = lower_bound(begin(p), end(p), left) - begin(p);
+    for (; i + 1 < p.size() && p[i + 1] <= right; ++i)
+        if (n1 == -1 || p[i + 1] - p[i] < n2 - n1) {
+            n1 = p[i];
+            n2 = p[i + 1];
+            if (n2 - n1 < 3)
+                break;			
         }
-
-
-        if (flag == 1){
-          if(i==1)
-            continue;
-          else
-            v.push_back(i);
-        }
-    }
-    }
-    vector<int> closestPrimes(int l, int r) {
-        findPrimes(l,r);
-        if(v.size()<2)return {-1,-1};
-        int temp1=v[0];
-        int temp2=v[1];
-        int minimum=temp2-temp1;
-        for(int i=2;i<v.size();i++){
-            if(v[i]-v[i-1]<minimum){
-                temp1=v[i-1];
-                temp2=v[i];
-                minimum=min(minimum,temp2-temp1);
-            }
-        }
-        return {temp1,temp2};
-    }
+    return {n1, n2};
+}
 };
