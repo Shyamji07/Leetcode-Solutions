@@ -1,20 +1,14 @@
 class Solution {
 public:
-    int minimumRounds(vector<int>& v) {
-        map<int,int>m;
-        int count=0;
-        int n=0;
-        for(int i=0;i<v.size();i++){
-            m[v[i]]++;
+    int minimumRounds(vector<int>& A) {
+        unordered_map<int, int> count;
+        int res = 0, freq1;
+        for (int a: A)
+            ++count[a];
+        for (auto& it: count) {
+            if (it.second == 1) return -1;
+            res += (it.second + 2) / 3;
         }
-        for(auto val:m){
-            if(val.second==1)return -1;
-            if(val.second%3==0){
-                count+=val.second/3;
-            }
-            else if(val.second%3!=0)count+=(val.second/3+1);
-        }
-        
-        return count;
+        return res;
     }
 };
