@@ -1,31 +1,22 @@
 class Solution {
-    public:
-        bool isItPossible(string s1, string s2) {
-            vector<int> a(26,0),b(26,0);
-            for(int i=0;i<s1.size();i++){
-                a[s1[i]-'a']++;
-            }
-            for(int i=0;i<s2.size();i++){
-                b[s2[i]-'a']++;
-            }
-            for(int i=0;i<26;i++){
-                for(int j=0;j<26;j++){
-                    if(a[i]>0 && b[j]>0){
-                    a[i]--;  b[j]--;
-                    b[i]++;  a[j]++;
-                    int counta=0,countb=0;
-                    for(int l=0;l<26;l++){
-                        if(a[l]>=1)counta++;
-                        if(b[l]>=1)countb++;
-                    }
-                    if(counta==countb)return true;
-                    a[i]++;b[j]++;
-                    b[i]--;  a[j]--;
-                    }
-                }
-            }
-            return false;
-        }
+public:
+    bool isItPossible(string word1, string word2) {
+    int cnt1[26] = {}, cnt2[26] = {}, dist1 = 0, dist2 = 0;
+    for (auto ch : word1)
+        dist1 += ++cnt1[ch - 'a'] == 1;
+    for (auto ch : word2)
+        dist2 += ++cnt2[ch - 'a'] == 1;
+    if (dist1 == dist2 && inner_product(begin(cnt1), end(cnt1), begin(cnt2), 0LL, plus<>(), multiplies<long long>()))
+        return true;
+    for (int i = 0; i < 26; ++i)
+        if (cnt1[i])
+            for (int j = 0; j < 26; ++j)
+                if (cnt2[j])
+                    if (i != j && dist1 - (cnt1[i] == 1) + (cnt1[j] == 0) ==
+                       dist2 - (cnt2[j] == 1) + (cnt2[i] == 0))
+                        return true;
+        return false;
+    }
     };
 
 static int fastio = []() {
