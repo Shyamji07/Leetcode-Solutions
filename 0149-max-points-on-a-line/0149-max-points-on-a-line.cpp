@@ -21,11 +21,11 @@ public:
             for(int j=i+1;j<points.size();j++)
             {
                 
-                if(points[i][0]==points[j][0]&&points[i][1]==points[j][1])
-                {
-                    count++;
-                }
-                else
+                // if(points[i][0]==points[j][0]&&points[i][1]==points[j][1])
+                // {
+                //     count++;
+                // }
+                // else
                 {
                     int nr=(points[j][1]-points[i][1]);
                     int dr=(points[i][0]-points[j][0]);
