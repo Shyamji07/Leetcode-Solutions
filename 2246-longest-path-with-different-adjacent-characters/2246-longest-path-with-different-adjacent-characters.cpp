@@ -1,23 +1,30 @@
 class Solution {
 public:
-    int longestPath(vector<int>& parent, string s) {
-        int n = s.size(), res = 0;
-        vector<vector<int>> children(n, vector<int>());
-        for (int i = 1; i < n; ++i)
-            children[parent[i]].push_back(i);
-        dfs(children, s, res, 0);
-        return res;
-    }
-
-    int dfs(vector<vector<int>>& children, string& s, int& res, int i) {
-        int big1 = 0, big2 = 0;
-        for (int& j : children[i]) {
-            int cur = dfs(children, s, res, j);
-            if (s[i] == s[j]) continue;
-            if (cur > big2) big2 = cur;
-            if (big2 > big1) swap(big1, big2);
+    int help(vector<vector<int>>&chids, string &s, int n, int &res){
+        if(!chids[n].size()) //leaf node
+            return 1;
+        int temp,path1=0,path2=0;
+        for(auto &x: chids[n]){
+            temp=help(chids,s,x,res);
+            if(s[n]==s[x])
+                continue;
+            if(temp>path1){
+                path2=path1;
+                path1=temp;
+            }
+            else if(temp>path2)
+                path2=temp;
         }
-        res = max(res, big1 + big2 + 1);
-        return big1 + 1;
+        res=max(res, 1+path1+path2);
+        return 1+path1;
+    }
+    int longestPath(vector<int>& parent, string s) {
+        int res=1,n=parent.size();
+        vector<vector<int>>chids(n);
+        for(int i=0;i<n;i++)
+            if(parent[i]>=0)
+                chids[parent[i]].push_back(i);
+        help(chids,s,0,res);
+        return res;
     }
 };
