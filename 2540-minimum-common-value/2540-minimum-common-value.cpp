@@ -1,7 +1,7 @@
 class Solution {
 public:
     int getCommon(vector<int>& arr1, vector<int>& arr2) {
-        set<int>st(begin(arr1),end(arr1));
+        unordered_set<int>st(begin(arr1),end(arr1));
         int mini=INT_MAX;
         for(auto a:arr2){
             if(st.find(a)!=st.end())
