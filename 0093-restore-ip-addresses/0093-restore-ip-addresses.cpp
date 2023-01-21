@@ -2,16 +2,13 @@ class Solution {
 public:
     bool is(string s){
         int n=s.size();
-        if(n==1){
-            return true;
-        }
-        if(n>3||s[0]=='0'){
+        if(n==1)return true;
+        if(n>3||s[0]=='0')
             return false;
-        }
-        int val=stoi(s);
-        if(val>255){
+        int temp=stoi(s);
+        if(temp>255)
             return false;
-        }
+
         return true;
     }
     vector<string> restoreIpAddresses(string s) {
