@@ -4,7 +4,7 @@ public:
         int n = nums1.size(); 
         vector<pair<int, int>> two; 
         for (int i = 0; i < n; ++i) 
-            two.push_back({nums2[i], nums1[i]}); 
+            two.emplace_back(nums2[i], nums1[i]); 
         sort(two.begin(), two.end(), greater<>()); 
         for (int i = 0; i < n; ++i) {
             nums1[i] = two[i].second; 
