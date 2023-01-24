@@ -1,33 +1,34 @@
 class Solution {
-public:
-    int snakesAndLadders(vector<vector<int>> &board) {
-        int n = board.size();
-        vector<pair<int, int>> cells(n * n + 1);
+    public int snakesAndLadders(int[][] board) {
+        int n = board.length;
+        Pair<Integer, Integer>[] cells = new Pair[n * n + 1];
         int label = 1;
-        vector<int> columns(n);
-        iota(columns.begin(), columns.end(), 0);
+        Integer[] columns = new Integer[n];
+        for (int i = 0; i < n; i++) {
+            columns[i] = i;
+        }
         for (int row = n - 1; row >= 0; row--) {
             for (int column : columns) {
-                cells[label++] = {row, column};
+                cells[label++] = new Pair<>(row, column);
             }
-            reverse(columns.begin(), columns.end());
+            Collections.reverse(Arrays.asList(columns));
         }
-        vector<int> dist(n * n + 1, -1);
-        queue<int> q;
+        int[] dist = new int[n * n + 1];
+        Arrays.fill(dist, -1);
+        Queue<Integer> q = new LinkedList<Integer>();
         dist[1] = 0;
-        q.push(1);
-        while (!q.empty()) {
-            int curr = q.front();
-            q.pop();
-            for (int next = curr + 1; next <= min(curr + 6, n * n); next++) {
-                auto [row, column] = cells[next];
+        q.add(1);
+        while (!q.isEmpty()) {
+            int curr = q.remove();
+            for (int next = curr + 1; next <= Math.min(curr + 6, n * n); next++) {
+                int row = cells[next].getKey(), column = cells[next].getValue();
                 int destination = board[row][column] != -1 ? board[row][column] : next;
                 if (dist[destination] == -1) {
                     dist[destination] = dist[curr] + 1;
-                    q.push(destination);
+                    q.add(destination);
                 }
             }
         }
         return dist[n * n];
     }
-};
+}
