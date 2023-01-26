@@ -1,6 +1,9 @@
 class Solution {
 public:
     int findCheapestPrice(int n, vector<vector<int>>& arr, int src, int dst, int k) {
+        std::ios::sync_with_stdio(false);
+        std::cin.tie(NULL);
+        std::cout.tie(0);
         vector<vector<pair<int, int>>> adj(n);
         for(auto x : arr){
             adj[x[0]].push_back({x[1], x[2]});
