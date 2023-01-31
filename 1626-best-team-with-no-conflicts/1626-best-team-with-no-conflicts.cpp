@@ -1,28 +1,22 @@
 class Solution {
-  public:
-      int bestTeamScore(vector<int>& scores, vector<int>& ages) {
-          vector<pair<int, int>> comb;
-          for (int i = 0; i < scores.size(); i++) {
-              comb.push_back({ages[i], scores[i]});
-          }
-          sort(comb.begin(), comb.end());
-          int n = comb.size();
-          int maxi = 0;
-          vector<int> dp(n);
-          for (int i = 0; i < n; i++) {
-              dp[i] = comb[i].second;
-              maxi = max(maxi, dp[i]);
-          }
+public:
+    int bestTeamScore(vector<int>& scores, vector<int>& ages) {
+        vector<tuple<int,int>> items;
+        for (int i = 0; i < size(scores); ++i) items.push_back({scores[i], ages[i]});
+        sort(begin(items), end(items));
 
-          for (int i = 0; i < n; i++) {
-              for (int j = i - 1; j >= 0; j--) {
-                  if (comb[i].second >= comb[j].second) {
-                      dp[i] = max(dp[i], comb[i].second + dp[j]);
-                  }
-              }
-              maxi = max(maxi, dp[i]);
-          }
-
-          return maxi;
-      }
-  };
+        map<int,int> res; res[0] = 0;
+        for(auto [sc, ag] : items) {
+            auto it0 = res.upper_bound(ag);
+            int sc2 = sc + (--it0)->second;
+            auto it = res.insert(it0, {ag, sc2});
+            if (it->second < sc2) it->second = sc2;
+            ++it;
+            while (it != res.end() && it->second <= sc2) {
+                auto it2 = it++;
+                res.erase(it2);
+            }
+        }
+        return res.rbegin()->second;
+    }
+};
