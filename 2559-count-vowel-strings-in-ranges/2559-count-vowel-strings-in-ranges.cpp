@@ -1,24 +1,12 @@
 class Solution {
 public:
-    bool is(char x){
-    if (x == 'a' || x == 'e' || x == 'i' ||x == 'o' || x == 'u')
-        return true;
-    else return false;
-}
-    vector<int> vowelStrings(vector<string>& arr, vector<vector<int>>& q) {
-        vector<int> ans;
-        vector<int>prefix(arr.size(),0);
-        if(is(arr[0][0]) and is(arr[0][arr[0].size()-1]))prefix[0]=1;
-        for(int i=1;i<arr.size();i++){
-            if(is(arr[i][0]) and is(arr[i][arr[i].size()-1])){prefix[i]+=prefix[i-1]+1;}
-            else prefix[i]=prefix[i-1];
-        }
-        for(int i=0;i<q.size();i++){
-            int l=q[i][0],r=q[i][1];
-            int cnt=0;
-            if(l==0) ans.push_back(prefix[r]);
-            else ans.push_back(prefix[r]-prefix[l-1]);
-        }
+     bool check(char c){ return (c == 'a' || c == 'e' || c == 'i' || c == 'o' ||  c == 'u'); }
+
+    vector<int> vowelStrings(vector<string>& words, vector<vector<int>>& queries) {
+        vector<int> v, ans;
+        v.push_back(0);
+        for(auto w: words){ v.push_back(  v.back() + ( check(w[0]) && check(w.back())  ));  }
+        for(auto q: queries) ans.push_back(v[q[1]+1] - v[q[0]]);
         return ans;
     }
 };
