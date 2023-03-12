@@ -1,10 +1,10 @@
-class Solution {
-public:
-    long long beautifulSubarrays(vector<int>& nums) {
-        unordered_map<int, int> dp{{0, 1}};
-        long long res = 0, pre = 0;
-        for (int a : nums)
-            res += dp[pre ^= a]++;
-        return res;
-    }
-};
+class Solution:
+    def beautifulSubarrays(self, nums: List[int]) -> int:
+        dp = Counter({0: 1})
+        res = pre = 0
+        for a in nums:
+            pre ^= a
+            res += dp[pre]
+            dp[pre] += 1
+        return res
+        
