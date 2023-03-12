@@ -1,11 +1,12 @@
-class Solution {
-public:
-    int vowelStrings(vector<string>& words, int l, int r) {
-        return count_if(begin(words) + l, begin(words) + r + 1, [](const auto &s){
-        auto isVowel = [](char c) { 
-            return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u';
-        };
-        return isVowel(s[0]) && isVowel(s.back());
-    });
+var vowelStrings = function(words, left, right) {
+    let c = 0
+    for(let i = left; i <= right ;i++ ){
+        if((words[i][0] == "a" ||words[i][0] == "e" ||words[i][0] == "i" ||words[i][0] == "o" ||words[i][0] == "u")
+         && (words[i][words[i].length -1] == "a" ||words[i][words[i].length -1] == "e" ||
+         words[i][words[i].length -1] == "i" ||words[i][words[i].length -1] == "o" ||
+         words[i][words[i].length -1] == "u")){
+            c++
+        }
     }
+    return c
 };
