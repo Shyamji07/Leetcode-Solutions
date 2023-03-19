@@ -1,4 +1,4 @@
-class TrieNode {
+struct TrieNode {
 public:
     bool word=false;
     TrieNode* children[26]={NULL};
