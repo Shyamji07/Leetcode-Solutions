@@ -1,16 +1,11 @@
-class Solution {
-public:
-    int maxSatisfaction(vector<int>& satisfaction) {
-        sort(satisfaction.begin(), satisfaction.end(), greater<int>());
-        int n = satisfaction.size();
-        int presum = 0, res = 0;
-        for (int i = 0; i < n; i++) {
-            presum += satisfaction[i];
-            if (presum < 0) {
-                break;
-            }
-            res += presum;
-        }
-        return res;
-    }
-};
+class Solution:
+    def maxSatisfaction(self, satisfaction: List[int]) -> int:
+        satisfaction.sort(reverse=True)
+        n = len(satisfaction)
+        presum, res = 0, 0
+        for i in range(n):
+            presum += satisfaction[i]
+            if presum < 0:
+                break
+            res += presum
+        return res
