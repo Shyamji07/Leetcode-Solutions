@@ -1,36 +1,23 @@
-/**
- * Definition for a binary tree node.
- * struct TreeNode {
- *     int val;
- *     TreeNode *left;
- *     TreeNode *right;
- *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
- *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
- *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
- * };
- */
 class Solution {
+    int s[100005];
+    void dfs(TreeNode* root,int d)
+    {
+        s[d]+=root->val;
+        if(root->left!=nullptr)dfs(root->left,d+1);
+        if(root->right!=nullptr)dfs(root->right,d+1);
+    }
+    void work(TreeNode* root,int d,int t)
+    {
+        if(root==nullptr)return;
+        root->val=s[d]-root->val-t;
+        int tl=root->left==nullptr?0:root->left->val,tr=root->right==nullptr?0:root->right->val;
+        work(root->left,d+1,tr);
+        work(root->right,d+1,tl);
+    }
 public:
     TreeNode* replaceValueInTree(TreeNode* root) {
-    root->val = 0;
-    queue<TreeNode*> q;  q.push(root);
-    while(!q.empty()){
-    int n = q.size(), sum = 0;
-    vector<TreeNode*> buf;
-    while(n--){
-        TreeNode* node = q.front(); q.pop();
-        buf.push_back(node);
-        if(node->left) { q.push(node->left); sum += node->left->val; }
-        if(node->right){ q.push(node->right); sum += node->right->val; }
-    }
-    for(auto node: buf){
-        int  t = sum;
-        if(node->left)  t -= node->left->val;
-        if(node->right) t -= node->right->val;
-        if(node->left)  node->left->val = t;
-        if(node->right) node->right->val = t;
-    }
-    }
-    return root;
+        dfs(root,0);
+        work(root,0,0);
+        return root;
     }
 };
