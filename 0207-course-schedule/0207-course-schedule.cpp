@@ -1,4 +1,4 @@
-class Solution {
+class Solution { //BFS
 public:
     bool canFinish(int n, vector<vector<int>>& prerequisites) {
         vector<vector<int>> G(n);
@@ -14,6 +14,7 @@ public:
    
 };
 
+//DFS
 // class Solution {
 // public:
 //     //In visited: 0->not explored, 1->being explored, 2->fully explored
