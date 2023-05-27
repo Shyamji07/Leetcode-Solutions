@@ -1,17 +1,32 @@
-class Solution {
-public:
-    int minExtraChar(string s, vector<string>& dictionary) {
-        int n = s.size();
-        vector<int> dp(n + 1, n);
-        dp[0] = 0;
-        for (int i = 0; i < n; i += 1) {
-            for (auto t : dictionary) {
-                if (s.substr(i, t.size()) == t) {
-                    dp[i + t.size()] = min(dp[i + t.size()], dp[i]);
-                }
-            }
-            dp[i + 1] = min(dp[i + 1], dp[i] + 1);
+var minExtraChar = function(s, dictionary) {
+    const dic = {};
+    const memo = new Array(s.length);
+
+    let current;
+    for (let i = 0; i < dictionary.length; ++i) {
+        current = dic;
+        for (let j = 0; j < dictionary[i].length; ++j) {
+            if (!current[dictionary[i][j]]) current[dictionary[i][j]] = {};
+            current = current[dictionary[i][j]];
         }
-        return dp.back();
+        current.end = true;
     }
+    
+    const check = (index, node) => {
+        if (index === s.length) return 0;
+        if (memo[index] !== undefined) return memo[index];
+
+        let ret = check(index + 1, dic) + 1;
+        let currentNode = node[s[index]];
+        let currentIndex = index;
+        while (currentNode) {
+            currentIndex++;
+            if (currentNode.end) ret = Math.min(ret, check(currentIndex, dic));
+            currentNode = currentNode[s[currentIndex]];
+        }
+
+        return memo[index] = ret;
+    };
+
+    return check(0, dic);
 };
