@@ -1,22 +1,17 @@
 class Solution {
 public:
-    int minExtraChar(string s, vector<string>& arr) {
-        unordered_set<string> st(arr.begin(), arr.end());
-        int n = s.length();
-
-        vector<int> dp(n + 1);
-        for (int i = 1; i <= n; i++) {
-            dp[i] = dp[i - 1] + 1;
-
-            for (int j = i; j >= 1; j--) {
-                string sub = s.substr(j - 1, i - (j - 1));
-
-                if (st.count(sub) > 0) {
-                    dp[i] = min(dp[i], dp[j - 1]);
+    int minExtraChar(string s, vector<string>& dictionary) {
+        int n = s.size();
+        vector<int> dp(n + 1, n);
+        dp[0] = 0;
+        for (int i = 0; i < n; i += 1) {
+            for (auto t : dictionary) {
+                if (s.substr(i, t.size()) == t) {
+                    dp[i + t.size()] = min(dp[i + t.size()], dp[i]);
                 }
             }
+            dp[i + 1] = min(dp[i + 1], dp[i] + 1);
         }
-
-        return dp[n];
+        return dp.back();
     }
 };
