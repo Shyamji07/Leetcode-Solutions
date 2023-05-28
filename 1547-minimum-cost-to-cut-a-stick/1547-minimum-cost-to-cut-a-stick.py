@@ -1,13 +1,23 @@
 class Solution:
-    def minCost(self, n, nums):
-        nums.append(0)
-        nums.append(n)
-        nums.sort()
-        size = len(nums)
-        dp = [[0] * size for _ in range(size)]
-        for d in range(2, size):
-            for i in range(size - d):
-                dp[i][i + d] = float('inf')
-                for m in range(i + 1, i + d):
-                    dp[i][i + d] = min(dp[i][i + d], dp[i][m] + dp[m][i + d] + nums[i + d] - nums[i])
-        return dp[0][size - 1]
+    def __init__(self):
+        self.dp = [[0] * 101 for _ in range(101)]
+    
+    def solve(self, start, end, cuts, left, right):
+        if left > right:
+            return 0
+        if self.dp[left][right]:
+            return self.dp[left][right]
+
+        cost = float('inf')
+        for i in range(left, right + 1):
+            left_cost = self.solve(start, cuts[i], cuts, left, i - 1)
+            right_cost = self.solve(cuts[i], end, cuts, i + 1, right)
+
+            cost = min(cost, end - start + left_cost + right_cost)
+        
+        self.dp[left][right] = cost
+        return cost
+    
+    def minCost(self, n, cuts):
+        cuts.sort()
+        return self.solve(0, n, cuts, 0, len(cuts) - 1)
