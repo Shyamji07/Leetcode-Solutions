@@ -1,17 +1,5 @@
-class Solution {
-public:
-    vector<int> fullBloomFlowers(vector<vector<int>>& flowers, vector<int>& persons) {
-        vector<int> start, end;
-        for (auto& t : flowers)
-            start.push_back(t[0]), end.push_back(t[1]);
-        sort(start.begin(), start.end());
-        sort(end.begin(), end.end());
-        vector<int> res;
-        for (int t : persons) {
-            int started = upper_bound(start.begin(), start.end(), t) - start.begin();
-            int ended = lower_bound(end.begin(), end.end(), t) - end.begin();
-            res.push_back(started - ended);
-        }
-        return res;
-    }
-};
+class Solution:
+    def fullBloomFlowers(self, A: List[List[int]], people: List[int]) -> List[int]:
+        start, end = sorted(a for a,b in A), sorted(b for a,b in A)
+        return [bisect_right(start, t) - bisect_left(end, t) for t in people]
+        
