@@ -3,19 +3,24 @@
  * @param {number[]} cuts
  * @return {number}
  */
-var minCost = function(n, nums) {
-    nums.push(0);
-    nums.push(n);
-    nums.sort((a, b) => a - b);
-    const size = nums.length;
-    const dp = Array.from({ length: size }, () => Array(size).fill(0));
-    for (let d = 2; d < size; ++d) {
-      for (let i = 0; i < size - d; ++i) {
-        dp[i][i + d] = Infinity;
-        for (let m = i + 1; m < i + d; ++m) {
-          dp[i][i + d] = Math.min(dp[i][i + d], dp[i][m] + dp[m][i + d] + nums[i + d] - nums[i]);
-        }
+var minCost = function(n, cuts) {
+    cuts.sort((a, b) => a - b);
+    const dp = Array.from({ length: 101 }, () => Array(101).fill(0));
+    
+    const solve = (start, end, cuts, left, right) => {
+      if (left > right) return 0;
+      if (dp[left][right]) return dp[left][right];
+
+      let cost = Infinity;
+      for (let i = left; i <= right; i++) {
+        const left_cost = solve(start, cuts[i], cuts, left, i - 1);
+        const right_cost = solve(cuts[i], end, cuts, i + 1, right);
+
+        cost = Math.min(cost, end - start + left_cost + right_cost);
       }
-    }
-    return dp[0][size - 1];
+      return dp[left][right] = cost;
+    };
+    
+    return solve(0, n, cuts, 0, cuts.length - 1);
+
 };
