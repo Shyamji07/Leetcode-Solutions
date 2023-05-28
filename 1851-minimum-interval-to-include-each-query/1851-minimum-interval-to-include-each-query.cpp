@@ -6,7 +6,6 @@ public:
         }
     };
     vector<int> minInterval(vector<vector<int>>& intervals, vector<int>& queries) {
-        // priority_queue<vector<int>> pq;
         priority_queue<pair<int,int> , vector<pair<int,int>>,comp>pq;
         unordered_map<int, int> result;
         vector<int> sortedQueries = queries, result2;
@@ -18,9 +17,9 @@ public:
                 int start = intervals[i][0], end = intervals[i++][1];
                 pq.push({end - start + 1, end});
             }
-            while (pq.size() && pq.top().second < q)
+            while (!pq.empty() && pq.top().second < q)
                 pq.pop();
-            result[q] = pq.size() ? pq.top().first : -1;
+            result[q] = !pq.empty() ? pq.top().first : -1;
         }
         for (int q : queries)
             result2.push_back(result[q]);
