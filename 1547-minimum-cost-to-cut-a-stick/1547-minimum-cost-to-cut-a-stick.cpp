@@ -1,19 +1,21 @@
 class Solution {
 public:
-    int minCost(int n, vector<int>& nums) {
-        nums.push_back(0);
-        nums.push_back(n);
-        sort(nums.begin(), nums.end());
-        int size = nums.size();
-        vector<vector<int>> dp(size, vector<int>(size));
-        for (int d = 2; d < size; ++d) {
-            for (int i = 0; i < size - d; ++i) {
-                dp[i][i + d] = 1e9;
-                for (int m = i + 1; m < i + d; ++m) {
-                    dp[i][i + d] = min(dp[i][i + d], dp[i][m] + dp[m][i + d] + nums[i + d] - nums[i]);
-                }
-            }
+    int dp[101][101]{};
+    int solve(int start , int end , vector<int>&cuts , int left , int right){
+        if(left > right)return 0;
+        if(dp[left][right])return dp[left][right];
+        
+        int cost = INT_MAX;
+        for(int i = left; i <= right; i++){
+            int left_cost = solve(start , cuts[i] , cuts , left , i - 1);
+            int right_cost = solve(cuts[i] , end , cuts , i + 1 , right);
+            
+            cost = min(cost , end - start + left_cost + right_cost);
         }
-        return dp[0][size - 1];
+        return dp[left][right] = cost;
+    }
+    int minCost(int n, vector<int>& cuts) {
+        sort(begin(cuts) , end(cuts));
+        return solve(0 , n , cuts , 0 , cuts.size() - 1);
     }
 };
