@@ -1,12 +1,9 @@
-/**
- * @param {string} s
- * @return {number}
- */
-var minimumCost = function(s) {
-    let a = 0;
-    for (let i = 1; i < s.length; i++) {
-        a += s[i - 1] === s[i] ? 0 : Math.min(i, s.length - i);
+class Solution {
+    public long minimumCost(String s) {
+        long res = 0;
+        for (int i = 1, n = s.length(); i < n; ++i)
+            if (s.charAt(i) != s.charAt(i - 1))
+                res += Math.min(i, n - i);
+        return res;
     }
-    return a;
-
-};
+}
