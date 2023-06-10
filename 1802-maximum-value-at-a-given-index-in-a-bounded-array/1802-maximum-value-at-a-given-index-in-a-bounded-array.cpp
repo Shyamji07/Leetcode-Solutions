@@ -1,18 +1,36 @@
-var maxValue = function(n, index, maxSum) {
-    let min = Math.floor(maxSum / n)
-    let max = maxSum
-    const findSum = (num, len) => {
-        if (len < num) return len * (num + num - len + 1) / 2
-        return num * (num + 1) / 2 + (len - num)
+class Solution {
+public:
+    
+   long long  int test(int a,int index,int n)
+    {
+        long long int b=max(0,a-index);
+        long long int res=(a+b)*(a-b+1)/2;
+        b=max(0,(a-((n-1)-index)));
+        res=res+(a+b)*(a-b+1)/2;
+        
+        return res-a;
     }
-    const helper = num => {
-        const leftSum = findSum(num, index + 1)
-        const rightSum = findSum(num, n - index)
-        return maxSum >= leftSum + rightSum - num
+    
+    int maxValue(int n, int index, int maxSum) {
+        
+        
+        maxSum=maxSum-n;
+        int l=0,r=maxSum;
+        
+        while(l<r)
+        {
+            int m=(l+r+1)/2;
+            if(test(m,index,n)>maxSum)
+            {
+                r=m-1;
+            }
+            else
+            {
+                l=m;
+            }
+        }
+        return l+1;
+        
+        
     }
-    while (min <= max) {
-        const mid = (min + max) >> 1
-        helper(mid) ? min = mid + 1 : max = mid - 1
-    }
-    return max
 };
