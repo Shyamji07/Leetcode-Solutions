@@ -1,23 +1,18 @@
-class Solution {
-public:
-    int maxValue(int n, int index, int maxSum) {
-        maxSum -= n;
-        int left = 0, right = maxSum, mid;
-        while (left < right) {
-            mid = (left + right + 1) / 2;
-            if (test(n, index, mid) <= maxSum)
-                left = mid;
-            else
-                right = mid - 1;
-        }
-        return left + 1;
+var maxValue = function(n, index, maxSum) {
+    let min = Math.floor(maxSum / n)
+    let max = maxSum
+    const findSum = (num, len) => {
+        if (len < num) return len * (num + num - len + 1) / 2
+        return num * (num + 1) / 2 + (len - num)
     }
-
-    long test(int n, int index, int a) {
-        int b = max(a - index, 0);
-        long res = long(a + b) * (a - b + 1) / 2;
-        b = max(a - ((n - 1) - index), 0);
-        res += long(a + b) * (a - b + 1) / 2;
-        return res - a;
+    const helper = num => {
+        const leftSum = findSum(num, index + 1)
+        const rightSum = findSum(num, n - index)
+        return maxSum >= leftSum + rightSum - num
     }
+    while (min <= max) {
+        const mid = (min + max) >> 1
+        helper(mid) ? min = mid + 1 : max = mid - 1
+    }
+    return max
 };
