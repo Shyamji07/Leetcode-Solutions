@@ -1,31 +1,34 @@
-class SnapshotArray {
-    constructor(length) {
-        // each element will be an array of Map
-        this.elements = Array(length).fill(null).map(el => new Map());   // max O(n + s)
-        this.snapId = 0;
+var SnapshotArray = function(length) {
+    this.length = length;
+    this.updated = true
+    this.arr = {}
+    this.snaps = [];
+    this.snap_id = 0;
+};
+
+SnapshotArray.prototype.set = function(index, val) {
+    if(val !== this.arr[index]) {
+        this.arr[index] = val;
+        this.updated = true;
     }
-    set(index, val) {   // O(1)
-        this.elements[index].set(this.snapId, val);
-    }
-    snap() {    // O(1)
-        ++this.snapId;
-        return this.snapId - 1;
-    }
-    get(index, snap_id) {   // O(log(s) + s)
-        const element = Array.from(this.elements[index].keys());    // O(s)
-        let left = 0,
-            right = element.length - 1,
-            mid, id = -1;
-        
-        while(left <= right) {
-            mid = left + Math.floor((right - left) / 2);
-            if(element[mid] <= snap_id) {
-                id = element[mid];
-                left = mid + 1;
-            } else {
-                right = mid - 1;
-            }
+};
+SnapshotArray.prototype.snap = function() {
+    if(this.updated) {
+        this.snaps[this.snap_id] = this.arr;
+        this.arr = {...this.arr};
+    } else {
+        if(Number.isInteger(this.snaps[this.snap_id - 1])) {
+            this.snaps[this.snap_id] = this.snaps[this.snap_id - 1];
+        } else {
+            this.snaps[this.snap_id] = this.snap_id - 1;
         }
-        return id === -1 ? 0 : this.elements[index].get(id);
     }
-}
+    this.updated = false;
+    return this.snap_id++;
+};
+SnapshotArray.prototype.get = function(index, snap_id) {
+    if(Number.isInteger(this.snaps[snap_id])) {
+        return this.snaps[this.snaps[snap_id]][index] || 0;
+    }
+    return this.snaps[snap_id][index] || 0;
+};
