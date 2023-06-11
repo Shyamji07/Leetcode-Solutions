@@ -17,9 +17,9 @@ public:
     int countPaths(vector<vector<int>>& grid) {
         long result=0;
         memo.resize(grid.size(), vector<long>(grid[0].size(), -1));
-        for(int i=0;i<grid.size();i++)      // For each cell as a starting point calculate the number of increasing paths it can contribute.
-            for(int j=0;j<grid[0].size();j++)
-                result=(result+helper(grid,i,j))%MOD;
+        for(int i = 0; i < grid.size(); i++)      // For each cell as a starting point calculate the number of increasing paths it can contribute.
+            for(int j = 0;j < grid[0].size(); j++)
+                result = (result + helper(grid, i, j)) % MOD;
         return result;
     }
 };
