@@ -1,25 +1,18 @@
-class Solution {
-public:
-    vector<string> summaryRanges(vector<int>& nums) {
-        vector<string> result;
-        int n = nums.size();
-        if(n == 0 )
-                return result;
-        int a = nums[0];
+class Solution:
+    def summaryRanges(self, nums: List[int]) -> List[str]:
+        ranges = []     
+        i = 0 
         
-        for(int i = 0; i<n; i++)
-        {
-            if( i == n-1 || nums[i]+1 != nums[i+1])
-            { if(nums[i] != a)
-                    result.push_back(to_string(a)+ "->"+ to_string(nums[i]));
-					
-                else
-                        result.push_back(to_string(a));
-				
-                if(i != n-1)
-                    a = nums[i+1];
-            }
-        }
-        return result;
-    }
-};
+        while i < len(nums): 
+            start = nums[i]  
+            while i + 1 < len(nums) and nums[i] + 1 == nums[i + 1]: 
+                i += 1 
+            
+            if start != nums[i]: 
+                ranges.append(str(start) + "->" + str(nums[i]))
+            else: 
+                ranges.append(str(nums[i]))
+            
+            i += 1
+
+        return ranges
