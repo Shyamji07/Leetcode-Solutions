@@ -1,14 +1,21 @@
-class Solution {
-public:
-    int uniquePaths(int a, int b) {
-      int dp[a][b];
-        for(int i=0;i<a;i++)dp[i][0]=1;
-        for(int i=0;i<b;i++)dp[0][i]=1;
-        for(int i=1;i<a;i++){
-            for(int j=1;j<b;j++){
-                 dp[i][j]=dp[i][j-1]+dp[i-1][j];            
-            }
-        }
-        return dp[a-1][b-1];
-    }
-};
+class Solution:
+    # O(m*n) space   
+    def uniquePaths(self, m, n):
+        if not m or not n:
+            return 0
+        dp = [[1 for _ in range(n)] for _ in range(m)]
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i-1][j] + dp[i][j-1]
+        return dp[-1][-1]
+
+    # # O(n) space 
+    # def uniquePaths(self, m, n):
+    #     if not m or not n:
+    #         return 0
+    #     cur = [1] * n
+    #     for i in xrange(1, m):
+    #         for j in xrange(1, n):
+    #             cur[j] += cur[j-1]
+    #     return cur[-1]
+        
