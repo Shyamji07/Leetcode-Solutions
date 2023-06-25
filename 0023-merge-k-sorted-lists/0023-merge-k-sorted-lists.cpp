@@ -9,7 +9,6 @@ public:
         // MAX heap
         priority_queue<pair<int, ListNode*>> pq; 
         int n=lists.size();
-        
         for(int i=0;i<n;i++)
         {
             ListNode *p = lists[i];
