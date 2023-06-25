@@ -1,17 +1,17 @@
-# class Solution:
-#     def largestAltitude(self, gain: List[int]) -> int:
-#          return max(0, max(accumulate(gain)))
+class Solution {
+public:
+    int largestAltitude(vector<int>& gain) {
+        int currentAltitude = 0;
+        // Highest altitude currently is 0.
+        int highestPoint = currentAltitude;
         
-class Solution:
-    def largestAltitude(self, gain: List[int]) -> int:
-        current_altitude = 0
-        # Highest altitude currently is 0.
-        highest_point = current_altitude
+        for (int altitudeGain : gain) {
+            // Adding the gain in altitude to the current altitude.
+            currentAltitude += altitudeGain;
+            // Update the highest altitude.
+            highestPoint = max(highestPoint, currentAltitude);
+        }
         
-        for altitude_gain in gain:
-            # Adding the gain in altitude to the current altitude.
-            current_altitude += altitude_gain
-            # Update the highest altitude.
-            highest_point = max(highest_point, current_altitude)
-        
-        return highest_point
+        return highestPoint;
+    }
+};
