@@ -1,16 +1,11 @@
-class Solution {
-public:
-    int maxProfit(vector<int>& prices, int fee) {
-          int n= prices.size();
-    
-    if(n<=1) return 0;
-    
-    int sell=0, buy=-prices[0];
-    
-  for(int i=1;i<n;i++){
-      sell=max(sell,buy+prices[i]-fee);
-      buy=max(buy,sell-prices[i]);
-  }
-        return sell;
-    }
-};
+class Solution:
+    def maxProfit(self, prices: List[int], fee: int) -> int:
+        n = len(prices)
+        hold, free = -prices[0], 0
+        
+        for i in range(1, n):
+            tmp = hold
+            hold = max(hold, free - prices[i])
+            free = max(free, tmp + prices[i] - fee)
+        
+        return free
