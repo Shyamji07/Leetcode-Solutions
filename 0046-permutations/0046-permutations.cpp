@@ -8,7 +8,6 @@ public:
         for (int k = i; k < j; k++) {
             swap(num[i], num[k]);
             recursion(num, i+1, j, res);
-            swap(num[i], num[k]);
         }
     }
     vector<vector<int>> permute(vector<int>& num) {
