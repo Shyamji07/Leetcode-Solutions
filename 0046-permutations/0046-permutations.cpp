@@ -6,7 +6,6 @@ public:
             return;
         }
         for (int k = i; k < j; k++) {
-            // if (i != k && num[i] == num[k]) continue;
             swap(num[i], num[k]);
             recursion(num, i+1, j, res);
             swap(num[i], num[k]);
