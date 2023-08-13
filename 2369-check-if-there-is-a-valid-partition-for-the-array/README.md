@@ -1,4 +1,4 @@
-<h2><a href="https://leetcode.com/problems/check-if-there-is-a-valid-partition-for-the-array/">2369. Check if There is a Valid Partition For The Array</a></h2><h3>Medium</h3><hr><div><p>You are given a <strong>0-indexed</strong> integer array <code>nums</code>. You have to partition the array into one or more <strong>contiguous</strong> subarrays.</p>
+<h2><a href="https://leetcode.com/problems/check-if-there-is-a-valid-partition-for-the-array/solution/">2369. Check if There is a Valid Partition For The Array</a></h2><h3>Medium</h3><hr><div><p>You are given a <strong>0-indexed</strong> integer array <code>nums</code>. You have to partition the array into one or more <strong>contiguous</strong> subarrays.</p>
 
 <p>We call a partition of the array <strong>valid</strong> if each of the obtained subarrays satisfies <strong>one</strong> of the following conditions:</p>
 
