@@ -1,29 +1,59 @@
 class Solution {
+    int setbit(int mask, int i) {
+        return mask | (1 << i);
+    }
 public:
     int shortestPathLength(vector<vector<int>>& graph) {
-        int n = graph.size(),res = 0;
-    queue<tuple<int,int,int>> q;
-    vector<vector<int>> seen(n,vector<int>(1<<n));
-    for(int i=0;i<n;i++){
-        q.push(tuple<int,int,int>(i,1<<i,0));
-        seen[i][1<<i] = true;
-    }
-    while (!q.empty())
-    {
-        auto [idx,mask,dist] = q.front();
-        q.pop();
-        if(mask==(1<<n)-1){
-            res = dist;
-            break;
-        }
-        for(auto v:graph[idx]){
-            int mask_v = mask|1<<v;
-            if(!seen[v][mask_v]){
-                q.push(tuple<int,int,int>(v,mask_v,dist+1));
-                seen[v][mask_v] = true;
+        unordered_map<int, vector<int>> hm;
+        int n = graph.size();
+        
+        for (int i = 0; i < n; i++) {
+            int m = graph[i].size();
+            for (int j = 0; j < m; j++) {
+                hm[i].push_back(graph[i][j]);
             }
         }
-    }
-    return res;
+        
+        int row = (int)pow(2, n);
+        int col = n;
+        vector<vector<int>> dist(row, vector<int>(col, -1));
+        queue<vector<int>> q;
+        
+        for (int i = 0; i < n; i++) {
+            int lead = i;
+            int mask = setbit(0, i);
+            
+            q.push({lead, mask});
+            dist[mask][lead] = 0;
+        }
+        
+        while (!q.empty()) {
+            int size = q.size();
+            for (int i = 0; i < size; i++) {
+                auto path = q.front();
+                q.pop();
+                int lead = path[0];
+                int mask = path[1];
+                
+                if (mask == row - 1) {
+                    return dist[mask][lead];
+                }
+                
+                if (hm.find(lead) != hm.end()) {
+                    for (auto child : hm[lead]) {
+                        int newLead = child;
+                        int newMask = setbit(mask, newLead);
+                        
+                        if (dist[newMask][newLead] != -1) {
+                            continue;
+                        }
+                        
+                        dist[newMask][newLead] = dist[mask][lead] + 1;
+                        q.push({newLead, newMask});
+                    }
+                }
+            }
+        }
+        return 0; // magic = LOL
     }
 };
