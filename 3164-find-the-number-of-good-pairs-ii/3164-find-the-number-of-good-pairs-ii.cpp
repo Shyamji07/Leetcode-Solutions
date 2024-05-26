@@ -1,7 +1,7 @@
 class Solution {
 public:
     long long numberOfPairs(vector<int>& nums1, vector<int>& nums2, int k) {
-        unordered_map<int,long long> a, b; 
+        map<int,long long> a, b; 
         for (int num : nums2) {
             b[num]++; 
         } 
