@@ -16,7 +16,7 @@ public:
                         color[neigh] = -color[curr];
                         q.push(neigh);
                     }
-                    if(color[neigh] == color[curr])return false;
+                    else if(color[neigh] == color[curr])return false;
                 }
             }
         }
