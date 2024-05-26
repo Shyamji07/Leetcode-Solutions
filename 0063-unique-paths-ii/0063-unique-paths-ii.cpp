@@ -4,11 +4,6 @@ public:
         int m=arr.size(),n=arr[0].size();
         if(arr[0][0]==1)return 0;
         vector<vector<int>>dp(m,vector<int>(n,0));
-        for(int i=0;i<m;i++){
-            for(int j=0;j<n;j++){
-                if(arr[i][j]==1)dp[i][j]=0;
-            }
-        }
          if(arr[0][0]==0)dp[0][0]=1;
         for(int j=1;j<n;j++){
             if(dp[0][j-1]==1 and arr[0][j]!=1)dp[0][j]=1;
